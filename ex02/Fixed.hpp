@@ -6,7 +6,7 @@
 /*   By: okraus <okraus@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:08:58 by okraus            #+#    #+#             */
-/*   Updated: 2024/05/07 13:58:41 by okraus           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:28:45 by okraus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ class Fixed
 
 	public:
 		//	Canonical
+		static const int	fBits = fractionalBits;
 		Fixed(void);
 		Fixed(const Fixed& fix);
-		Fixed &operator=(const Fixed& f);
+		Fixed	&operator = (const Fixed& f);
 		~Fixed(void);
 
 		//	extra construcotrs
@@ -35,25 +36,33 @@ class Fixed
 		//	extra overloads (not yet)
 
 		// Comparison Operators
-		// bool	operator>(Fixed fix)const;
-		// bool	operator<(Fixed fix)const;
-		// bool	operator>=(Fixed fix)const;
-		// bool	operator<=(Fixed fix)const;
-		// bool	operator==(Fixed fix)const;
-		// bool	operator!=(Fixed fix)const;
+		bool	operator > (const Fixed &fix)const;
+		bool	operator < (const Fixed &fix)const;
+		bool	operator >= (const Fixed &fix)const;
+		bool	operator <= (const Fixed &fix)const;
+		bool	operator == (const Fixed &fix)const;
+		bool	operator != (const Fixed &fix)const;
 
 		// Arithmetic .Operators
-		Fixed operator+(const Fixed& fix2)const;
-		// Fixed	&operator-(Fixed fix2)const;
-		// Fixed	&operator*(Fixed fix2)const;
-		// Fixed	&operator/(Fixed fix2)const;
+		Fixed	operator + (const Fixed& fix)const;
+		Fixed	operator + (const int& fint)const;
+		Fixed	operator + (const float& ffloat)const;
+		Fixed	operator - (const Fixed& fix)const;
+		Fixed	operator - (const int& fint)const;
+		Fixed	operator - (const float& ffloat)const;
+		Fixed	operator * (const Fixed& fix)const;
+		Fixed	operator * (const int& fint)const;
+		Fixed	operator * (const float& ffloat)const;
+		Fixed	operator / (const Fixed& fix)const;
+		Fixed	operator / (const int& fint)const;
+		Fixed	operator / (const float& ffloat)const;
 
-		// // pre-increment Operators
-		// Fixed	operator++();
-		// Fixed	operator--();
-		// // post-increment Operators
-		// Fixed	operator++(int);
-		// Fixed	operator--(int);
+		// pre-increment Operators
+		Fixed	operator ++ ();
+		Fixed	operator -- ();
+		// post-increment Operators
+		Fixed	operator ++ (int);
+		Fixed	operator -- (int);
 
 		//	getter
 		int			getRawBits(void) const;
@@ -65,12 +74,23 @@ class Fixed
 		float				toFloat(void) const;
 		int					toInt(void) const;
 		std::string			toString(void) const;
-		// static Fixed		&min(Fixed &first, Fixed &second);
-		// static const Fixed	&min(Fixed const &first, Fixed const &second);
-		// static Fixed		&max(Fixed &first, Fixed &second);
-		// static const Fixed	&max(const Fixed &first, const Fixed &second);
+		static Fixed		&min(Fixed &a, Fixed &b);
+		static Fixed		&max(Fixed &a, Fixed &b);
+		static const Fixed	&min(const Fixed &a, const Fixed &b);
+		static const Fixed	&max(const Fixed &a, const Fixed &b);
+	// Other member functions
 };
 
 //	ostream overload
 std::ostream	&operator<<(std::ostream &o, Fixed const &fixed);
+
+// other overloads
+Fixed	operator + (int fint, const Fixed& fix);
+Fixed	operator + (float ffloat, const Fixed& fix);
+Fixed	operator - (int fint, const Fixed& fix);
+Fixed	operator - (float ffloat, const Fixed& fix);
+Fixed	operator * (int fint, const Fixed& fix);
+Fixed	operator * (float ffloat, const Fixed& fix);
+Fixed	operator / (int fint, const Fixed& fix);
+Fixed	operator / (float ffloat, const Fixed& fix);
 #endif

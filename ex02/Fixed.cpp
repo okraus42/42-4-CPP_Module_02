@@ -6,7 +6,7 @@
 /*   By: okraus <okraus@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:30:55 by okraus            #+#    #+#             */
-/*   Updated: 2024/05/07 14:03:46 by okraus           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:33:41 by okraus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,31 @@
 
 Fixed::Fixed()
 {
-	std::cout << "Default constructor called" << std::endl;
+	//std::cout << "Default constructor called" << std::endl;
 	this->fixedPointValue = 0;
 }
 
 Fixed::Fixed(const Fixed &fix)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	//std::cout << "Copy constructor called" << std::endl;
 	*this = fix;
 }
 
-Fixed	&Fixed::operator=(const Fixed &fix)
+Fixed	&Fixed::operator = (const Fixed &fix)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
+	//std::cout << "Copy assignment operator called" << std::endl;
 	this->fixedPointValue = fix.getRawBits();
 	return (*this);
 }
 
 Fixed::~Fixed()
 {
-	std::cout << "Destructor called" << std::endl;
+	//std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const int fixint)
 {
-	std::cout << "Copy int constructor called" << std::endl;
+	//std::cout << "Copy int constructor called" << std::endl;
 	if (fixint > 0xFFFFFF || fixint < -(0x1000000))
 	{
 		std::cerr << "Error: Value <" << fixint
@@ -56,7 +56,7 @@ Fixed::Fixed(const float fixfloat)
 {
 	int	temp;
 
-	std::cout << "Copy float constructor called" << std::endl;
+	//std::cout << "Copy float constructor called" << std::endl;
 	if (fixfloat * (1 << this->fractionalBits) >= 2147483648.f || fixfloat * (1 << this->fractionalBits) < -2147483648.f)
 	{
 		std::cerr << "Error: Value <" << fixfloat
@@ -78,13 +78,13 @@ Fixed::Fixed(const float fixfloat)
 
 int	Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
+	//std::cout << "getRawBits member function called" << std::endl;
 	return this->fixedPointValue;
 }
 
 void	Fixed::setRawBits(int const raw)
 {
-	std::cout << "setRawBits member function called" << std::endl;
+	//std::cout << "setRawBits member function called" << std::endl;
 	this->fixedPointValue = raw;
 }
 
@@ -166,10 +166,292 @@ std::ostream	&operator<<(std::ostream &o, Fixed const &f)
 }
 
 //Operators
-Fixed	Fixed::operator+(const Fixed &fix2)const
+		// bool	operator > (Fixed fix)const;
+		// bool	operator < (Fixed fix)const;
+		// bool	operator >= (Fixed fix)const;
+		// bool	operator <= (Fixed fix)const;
+		// bool	operator == (Fixed fix)const;
+		// bool	operator != (Fixed fix)const;
+bool	Fixed::operator > (const Fixed &fix)const
+{
+	return (this->getRawBits() > fix.getRawBits());
+}
+
+bool	Fixed::operator < (const Fixed &fix)const
+{
+	return (this->getRawBits() < fix.getRawBits());
+}
+
+bool	Fixed::operator >= (const Fixed &fix)const
+{
+	return (this->getRawBits() >= fix.getRawBits());
+}
+
+bool	Fixed::operator <= (const Fixed &fix)const
+{
+	return (this->getRawBits() <= fix.getRawBits());
+}
+
+bool	Fixed::operator == (const Fixed &fix)const
+{
+	return (this->getRawBits() == fix.getRawBits());
+}
+
+bool	Fixed::operator != (const Fixed &fix)const
+{
+	return (this->getRawBits() != fix.getRawBits());
+}
+
+Fixed	Fixed::operator + (const Fixed &fix)const
 {
 	Fixed	result;
-	std::cout << "Coperator + called" << std::endl;
-	result.fixedPointValue = this->fixedPointValue + fix2.getRawBits();
+
+	//std::cout << "Operator + called" << std::endl;
+	result.setRawBits(this->fixedPointValue + fix.getRawBits());
 	return (result);
+}
+
+Fixed	Fixed::operator + (const int &fint)const
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator + with int called" << std::endl;
+	result.setRawBits(this->fixedPointValue + fixint.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator + (const float &ffloat)const
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator + with float called" << std::endl;
+	result.setRawBits(this->fixedPointValue + fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	operator + (int fint, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator + with int called" << std::endl;
+	result.setRawBits(fix.getRawBits() + fixint.getRawBits());
+	return (result);
+}
+
+Fixed	operator + (float ffloat, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator + with float called" << std::endl;
+	result.setRawBits(fix.getRawBits() + fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator - (const Fixed &fix)const
+{
+	Fixed	result;
+
+	//std::cout << "Operator - called" << std::endl;
+	result.setRawBits(this->fixedPointValue - fix.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator - (const int &fint)const
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator - with int called" << std::endl;
+	result.setRawBits(this->fixedPointValue - fixint.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator - (const float &ffloat)const
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator - with float called" << std::endl;
+	result.setRawBits(this->fixedPointValue - fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	operator - (int fint, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator - with int called" << std::endl;
+	result.setRawBits(fix.getRawBits() - fixint.getRawBits());
+	return (result);
+}
+
+Fixed	operator - (float ffloat, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator - with float called" << std::endl;
+	result.setRawBits(fix.getRawBits() - fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator * (const Fixed &fix)const
+{
+	Fixed	result;
+
+	//std::cout << "Operator * called" << std::endl;
+	result.setRawBits((static_cast<long long>(this->fixedPointValue) * fix.getRawBits()) >> this->fractionalBits);
+	return (result);
+}
+
+Fixed	Fixed::operator * (const int &fint)const
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator * with int called" << std::endl;
+	result.setRawBits((static_cast<long long>(this->fixedPointValue) * fixint.getRawBits()) >> this->fractionalBits);
+	return (result);
+}
+
+Fixed	Fixed::operator * (const float &ffloat)const
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator * with float called" << std::endl;
+	result.setRawBits((static_cast<long long>(this->fixedPointValue) * fixfloat.getRawBits()) >> this->fractionalBits);
+	return (result);
+}
+
+Fixed	operator * (int fint, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	std::cout << "Operator * with int called" << std::endl;
+	result.setRawBits((static_cast<long long>(fix.getRawBits()) * fixint.getRawBits()) >> fix.fBits);
+	return (result);
+}
+
+Fixed	operator * (float ffloat, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	std::cout << "Operator * with float called" << std::endl;
+	result.setRawBits((static_cast<long long>(fix.getRawBits()) * fixfloat.getRawBits()) >> fix.fBits);
+	return (result);
+}
+
+Fixed	Fixed::operator / (const Fixed &fix)const
+{
+	Fixed	result;
+
+	//std::cout << "Operator / called" << std::endl;
+	result.setRawBits(((static_cast<long long>(this->fixedPointValue)) << this->fractionalBits) / fix.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator / (const int &fint)const
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator / with int called" << std::endl;
+	result.setRawBits(((static_cast<long long>(this->fixedPointValue)) << this->fractionalBits) / fixint.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator / (const float &ffloat)const
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator / with float called" << std::endl;
+	result.setRawBits(((static_cast<long long>(this->fixedPointValue)) << this->fractionalBits) / fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	operator / (int fint, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixint(fint);
+
+	//std::cout << "Operator / with int called" << std::endl;
+	result.setRawBits(((static_cast<long long>(fix.getRawBits())) << fix.fBits) / fixint.getRawBits());
+	return (result);
+}
+
+Fixed	operator / (float ffloat, const Fixed &fix)
+{
+	Fixed	result;
+	Fixed	fixfloat(ffloat);
+
+	//std::cout << "Operator * with float called" << std::endl;
+	result.setRawBits(((static_cast<long long>(fix.getRawBits())) << fix.fBits) / fixfloat.getRawBits());
+	return (result);
+}
+
+Fixed	Fixed::operator ++ (void)
+{
+	++(this->fixedPointValue);
+	return (*this);
+}
+
+Fixed	Fixed::operator -- (void)
+{
+	--(this->fixedPointValue);
+	return (*this);
+}
+
+Fixed	Fixed::operator ++ (int)
+{
+	Fixed result;
+
+	result = *this;
+	++(this->fixedPointValue);
+	return (result);
+}
+
+Fixed	Fixed::operator -- (int)
+{
+	Fixed result;
+
+	result = *this;
+	--(this->fixedPointValue);
+	return (result);
+}
+
+Fixed	&Fixed::max(Fixed &a, Fixed &b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+const Fixed	&Fixed::max(const Fixed &a, const Fixed &b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+Fixed	&Fixed::min(Fixed &a, Fixed &b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+const Fixed	&Fixed::min(const Fixed &a, const Fixed &b)
+{
+	if (a < b)
+		return (a);
+	return (b);
 }
