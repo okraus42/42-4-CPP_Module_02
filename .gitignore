@@ -32,3 +32,4 @@
 *.app
 ex00/MyFirstClassInOrthodoxCanonicalForm
 .vscode/settings.json
+ex01/TowardsAMoreUsefulFixed-PointNumberClass
