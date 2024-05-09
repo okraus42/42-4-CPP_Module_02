@@ -6,7 +6,7 @@
 /*   By: okraus <okraus@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:30:55 by okraus            #+#    #+#             */
-/*   Updated: 2024/05/07 13:19:19 by okraus           ###   ########.fr       */
+/*   Updated: 2024/05/09 11:07:06 by okraus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 
 Fixed::Fixed()
 {
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "Default constructor called\t\t" << this << std::endl;
 	this->fixedPointValue = 0;
 }
 
 Fixed::Fixed(const Fixed &fix)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "Copy constructor called\t\t\t" << this << std::endl;
 	*this = fix;
 }
 
 Fixed&	Fixed::operator=(const Fixed &fix)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
+	std::cout << "Copy assignment operator called\t\t" << this << std::endl;
 	// if (this != &fix)
 	// 	this->fixedPointValue = fix.getRawBits();
 	this->fixedPointValue = fix.getRawBits();
@@ -37,12 +37,12 @@ Fixed&	Fixed::operator=(const Fixed &fix)
 
 Fixed::~Fixed()
 {
-	std::cout << "Destructor called" << std::endl;
+	std::cout << "Destructor called\t\t\t" << this << std::endl;
 }
 
 Fixed::Fixed(const int fixint)
 {
-	std::cout << "Copy int constructor called" << std::endl;
+	std::cout << "Copy int constructor called\t\t" << this << std::endl;
 	if (fixint > 0xFFFFFF || fixint < -(0x1000000))
 	{
 		std::cerr << "Error: Value <" << fixint
@@ -58,7 +58,7 @@ Fixed::Fixed(const float fixfloat)
 {
 	int	temp;
 
-	std::cout << "Copy float constructor called" << std::endl;
+	std::cout << "Copy float constructor called\t\t" << this << std::endl;
 	if (fixfloat * (1 << this->fractionalBits) >= 2147483648.f || fixfloat * (1 << this->fractionalBits) < -2147483648.f)
 	{
 		std::cerr << "Error: Value <" << fixfloat
@@ -80,13 +80,13 @@ Fixed::Fixed(const float fixfloat)
 
 int	Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
+	std::cout << "getRawBits member function called\t" << this << std::endl;
 	return this->fixedPointValue;
 }
 
 void	Fixed::setRawBits(int const raw)
 {
-	std::cout << "setRawBits member function called" << std::endl;
+	std::cout << "setRawBits member function called\t" << this << std::endl;
 	this->fixedPointValue = raw;
 }
 

@@ -6,7 +6,7 @@
 /*   By: okraus <okraus@student.42prague.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:30:55 by okraus            #+#    #+#             */
-/*   Updated: 2024/05/07 16:33:41 by okraus           ###   ########.fr       */
+/*   Updated: 2024/05/09 11:14:57 by okraus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ Fixed	operator * (int fint, const Fixed &fix)
 	Fixed	result;
 	Fixed	fixint(fint);
 
-	std::cout << "Operator * with int called" << std::endl;
+	//std::cout << "Operator * with int called" << std::endl;
 	result.setRawBits((static_cast<long long>(fix.getRawBits()) * fixint.getRawBits()) >> fix.fBits);
 	return (result);
 }
@@ -344,7 +344,7 @@ Fixed	operator * (float ffloat, const Fixed &fix)
 	Fixed	result;
 	Fixed	fixfloat(ffloat);
 
-	std::cout << "Operator * with float called" << std::endl;
+	//std::cout << "Operator * with float called" << std::endl;
 	result.setRawBits((static_cast<long long>(fix.getRawBits()) * fixfloat.getRawBits()) >> fix.fBits);
 	return (result);
 }
